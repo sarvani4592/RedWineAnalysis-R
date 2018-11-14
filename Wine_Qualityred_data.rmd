@@ -98,7 +98,8 @@ Wine %>%
 Wine$oquality = as.ordered(Wine$quality)
 ggplot(Wine, aes(x=quality, fill = oquality)) +
   geom_bar(stat="count") +
-  geom_text(position = "stack", stat='count',aes(label=..count..), vjust = -0.5)+
+  geom_text(position = "stack", stat='count',aes(label=..count..), vjust = -0.5)
++
   labs(y="Number of Observations", x="Wine Quality") +
   theme(legend.position="none")
 ```
@@ -121,7 +122,8 @@ Considering what we have inferred in the previous section, we have created a new
 ```{r Echo=False }
 Wine$good.wine<-ifelse(Wine$quality>5.5,1,0)
 
-ggplot(Wine,aes(x=good.wine,fill=factor(good.wine)))+geom_bar(stat = "count",position = "dodge")+
+ggplot(Wine,aes(x=good.wine,fill=factor(good.wine)))+geom_bar(stat = "count",
+                                                            position = "dodge")+
   scale_x_continuous(breaks = seq(0,1,1))+
   ggtitle("Distribution of Good/Bad Red Wines")+
   theme_classic()
@@ -132,7 +134,8 @@ ggplot(Wine,aes(x=good.wine,fill=factor(good.wine)))+geom_bar(stat = "count",pos
 # Bivariate Plots Section
 
 ```{r Echo=False, Bivariate_Plots}
-Wine.orig %>% cor() %>% corrplot.mixed(upper = "ellipse", tl.cex=.8, tl.pos = 'lt', number.cex = .8)
+Wine.orig %>% cor() %>% corrplot.mixed(upper = "ellipse", tl.cex=.8, 
+                                       tl.pos = 'lt', number.cex = .8)
 ```
 
 
@@ -159,9 +162,12 @@ We're interested in wine's quality, so we care about the final 2 columns/rows in
 Let us see how each variable is related to wine quality. A method to visualize the relationships between variables is with the pairs plot as shown below
 
 ```{r}
-ggplot(Wine,aes(x=fixed.acidity,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(fixed.acidity[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(fixed.acidity[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+ggplot(Wine,aes(x=fixed.acidity,fill=factor(good.wine)))+
+  geom_density(alpha=0.25)+
+  geom_vline(aes(xintercept=mean(fixed.acidity[good.wine==0],na.rm=T)),
+             color="red",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(fixed.acidity[good.wine==1],na.rm=T)),
+             color="blue",linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(4,16,1))+
   xlab(label = "Fixed Acidity Level")+
   ggtitle("Distribution of Fixed Acidity Levels")+
@@ -171,9 +177,12 @@ ggplot(Wine,aes(x=fixed.acidity,fill=factor(good.wine)))+geom_density(alpha=0.25
 
 ```{r}
 #Volatile Acidity and Wine Quality
-ggplot(Wine,aes(x=volatile.acidity,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(volatile.acidity[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(volatile.acidity[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+ggplot(Wine,aes(x=volatile.acidity,fill=factor(good.wine)))+
+  geom_density(alpha=0.25)+
+  geom_vline(aes(xintercept=mean(volatile.acidity[good.wine==0],na.rm=T)),
+             color="red",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(volatile.acidity[good.wine==1],na.rm=T)),
+             color="blue",linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0,1.6,0.1))+
   xlab(label = "Volatile Acidity Level")+
   ggtitle("Distribution of Volatile Acidity Levels")+
@@ -185,8 +194,10 @@ ggplot(Wine,aes(x=volatile.acidity,fill=factor(good.wine)))+geom_density(alpha=0
 ```{r}
 #Citric Acid and Wine Quality
 ggplot(Wine,aes(x=citric.acid,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(citric.acid[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(citric.acid[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(citric.acid[good.wine==0],na.rm=T)),
+             color="red",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(citric.acid[good.wine==1],na.rm=T)),
+             color="blue",linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0,1,0.1))+
   xlab(label = "Citric Acid Level")+
   ggtitle("Distribution of Citric Acid Levels")+
@@ -197,9 +208,12 @@ ggplot(Wine,aes(x=citric.acid,fill=factor(good.wine)))+geom_density(alpha=0.25)+
 
 ```{r}
 #Residual Sugar and Wine Quality
-ggplot(Wine,aes(x=residual.sugar,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(residual.sugar[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(residual.sugar[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+ggplot(Wine,aes(x=residual.sugar,fill=factor(good.wine)))+
+  geom_density(alpha=0.25)+
+  geom_vline(aes(xintercept=mean(residual.sugar[good.wine==0],na.rm=T)),
+             color="red",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(residual.sugar[good.wine==1],na.rm=T)),
+             color="blue",linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0.5,15.5,1))+
   xlab(label = "Residual Sugar Level")+
   ggtitle("Distribution of Residual Sugar Levels")+
@@ -211,8 +225,10 @@ ggplot(Wine,aes(x=residual.sugar,fill=factor(good.wine)))+geom_density(alpha=0.2
 ```{r}
 #Chlorides and Wine Quality
 ggplot(Wine,aes(x=chlorides,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(chlorides[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(chlorides[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(chlorides[good.wine==0],na.rm=T)),color="red",
+             linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(chlorides[good.wine==1],na.rm=T)),color="blue",
+             linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0.01,0.62,0.1))+
   xlab(label = "Chlorides Level")+
   ggtitle("Distribution of Chlorides Levels")+
@@ -222,9 +238,12 @@ ggplot(Wine,aes(x=chlorides,fill=factor(good.wine)))+geom_density(alpha=0.25)+
 
 ```{r}
 #Free Sulfur Dioxide and Wine Quality
-ggplot(Wine,aes(x=free.sulfur.dioxide,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(free.sulfur.dioxide[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(free.sulfur.dioxide[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+ggplot(Wine,aes(x=free.sulfur.dioxide,fill=factor(good.wine)))+
+  geom_density(alpha=0.25)+
+  geom_vline(aes(xintercept=mean(free.sulfur.dioxide[good.wine==0],na.rm=T)),
+             color="red",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(free.sulfur.dioxide[good.wine==1],na.rm=T)),
+             color="blue",linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0,72,8))+
   xlab(label = "Free Sulfur Dioxide Level")+
   ggtitle("Distribution of Free Sulfur Dioxide Levels")+
@@ -234,9 +253,12 @@ ggplot(Wine,aes(x=free.sulfur.dioxide,fill=factor(good.wine)))+geom_density(alph
 
 ```{r}
 #Total Sulfur Dioxide and Wine Quality
-ggplot(Wine,aes(x=total.sulfur.dioxide,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(total.sulfur.dioxide[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(total.sulfur.dioxide[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+ggplot(Wine,aes(x=total.sulfur.dioxide,fill=factor(good.wine)))+
+  geom_density(alpha=0.25)+
+  geom_vline(aes(xintercept=mean(total.sulfur.dioxide[good.wine==0],na.rm=T)),
+             color="red",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(total.sulfur.dioxide[good.wine==1],na.rm=T)),
+             color="blue",linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0,300,20))+
   xlab(label = "Total Sulfur Dioxide Level")+
   ggtitle("Distribution of Total Sulfur Dioxide Levels")+
@@ -247,8 +269,10 @@ ggplot(Wine,aes(x=total.sulfur.dioxide,fill=factor(good.wine)))+geom_density(alp
 ```{r}
 #Density and Wine Quality
 ggplot(Wine,aes(x=density,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(density[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(density[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(density[good.wine==0],na.rm=T)),color="red",
+             linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(density[good.wine==1],na.rm=T)),color="blue",
+             linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0.9,1.1,0.05))+
   xlab(label = "Red Wine Density Level")+
   ggtitle("Distribution of Red Wine Density Levels")+
@@ -259,8 +283,10 @@ ggplot(Wine,aes(x=density,fill=factor(good.wine)))+geom_density(alpha=0.25)+
 ```{r}
 #PH and Wine Quality
 ggplot(Wine,aes(x=pH,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(pH[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(pH[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(pH[good.wine==0],na.rm=T)),color="red",
+             linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(pH[good.wine==1],na.rm=T)),color="blue",
+             linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(2.5,5,0.5))+
   xlab(label = "Red Wine PH Level")+
   ggtitle("Distribution of Red Wine PH Levels")+
@@ -271,8 +297,10 @@ ggplot(Wine,aes(x=pH,fill=factor(good.wine)))+geom_density(alpha=0.25)+
 ```{r}
 #Sulphates and Wine Quality
 ggplot(Wine,aes(x=sulphates,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(sulphates[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(sulphates[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(sulphates[good.wine==0],na.rm=T)),color="red",
+             linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(sulphates[good.wine==1],na.rm=T)),color="blue",
+             linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(0,2,0.25))+
   xlab(label = "Sulphates Level")+
   ggtitle("Distribution of Sulphates Levels")+
@@ -283,8 +311,10 @@ ggplot(Wine,aes(x=sulphates,fill=factor(good.wine)))+geom_density(alpha=0.25)+
 ```{r}
 #Alcohol and Wine Quality
 ggplot(Wine,aes(x=alcohol,fill=factor(good.wine)))+geom_density(alpha=0.25)+
-  geom_vline(aes(xintercept=mean(alcohol[good.wine==0],na.rm=T)),color="red",linetype="dashed",lwd=1)+
-  geom_vline(aes(xintercept=mean(alcohol[good.wine==1],na.rm=T)),color="blue",linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(alcohol[good.wine==0],na.rm=T)),color="red",
+             linetype="dashed",lwd=1)+
+  geom_vline(aes(xintercept=mean(alcohol[good.wine==1],na.rm=T)),color="blue",
+             linetype="dashed",lwd=1)+
   scale_x_continuous(breaks = seq(8,15,1))+
   xlab(label = "Alcohol Level")+
   ggtitle("Distribution of Alcohol Levels")+
@@ -356,7 +386,8 @@ We can observe the following, for each feature:
 
 Wine$good.wine<-ifelse(Wine$quality>5.5,1,0)
 
-ggplot(Wine,aes(x=good.wine,fill=factor(good.wine)))+geom_bar(stat = "count",position = "dodge")+
+ggplot(Wine,aes(x=good.wine,fill=factor(good.wine)))+
+  geom_bar(stat = "count",position = "dodge")+
   scale_x_continuous(breaks = seq(0,1,1))+
   ggtitle("Distribution of Good/Bad Red Wines")+
   theme_classic()
@@ -387,7 +418,8 @@ In classification model, skewed distributions are undesirable, one method is to 
 
 ### Plot Three
 ```{r echo=FALSE, Plot_Three}
-Wine.orig %>% cor() %>% corrplot.mixed(upper = "ellipse", tl.cex=.8, tl.pos = 'lt', number.cex = .8)
+Wine.orig %>% cor() %>% corrplot.mixed(upper = "ellipse", tl.cex=.8,
+                                       tl.pos = 'lt', number.cex = .8)
 ```
 
 ### Description Three
