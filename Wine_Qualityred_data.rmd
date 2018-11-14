@@ -1,4 +1,5 @@
 ---
+Author:sai sarvani 
 output:
   pdf_document: default
   html_document: default
@@ -16,6 +17,9 @@ Dataset
 As mentioned before, the data is about red wine samples (vinho verde) from Portugal. The data was collected from May 2004 to February 2007 using only protected designation of origin samples that were tested at the official certification entity.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, packages}
+knitr::opts_chunk$set(fig.width=9,fig.height=5,fig.path='Figs/',
+                      fig.align='center',tidy=TRUE,
+                      echo=FALSE,warning=FALSE,message=FALSE)
 
 library(ggplot2)
 library(GGally) 
@@ -27,7 +31,7 @@ library(dplyr)
 library(corrplot)
 ```
 
-```{r echo=TRUE, Load_the_Data}
+```{r ECHO=FALSE, Load_the_Data}
 # Load the Data
 Wine <- read.csv("C:/Users/user/Desktop/R project/wineQualityReds.csv")
 Wine<-Wine[,-1]
@@ -63,7 +67,7 @@ The data contains 1599 observations (wine samples) and 12 attributes or variable
 
 # Univariate Plots Section
 
-```{r echo=TRUE, Univariate_Plots}
+```{r ECHO=FALSE, Univariate_Plots}
 Wine %>%
   keep(is.numeric) %>% 
   gather() %>% 
@@ -79,7 +83,7 @@ If a skewed distribution is undesirable, one method is to log transform the vari
 
 
     
-```{r echo=TRUE, Univariate_Plot}
+```{r ECHO=FALSE, Univariate_Plot}
 Wine %>%
   keep(is.numeric) %>% 
   gather() %>% 
@@ -90,7 +94,7 @@ Wine %>%
     scale_x_continuous(trans='log10')
 ```
 
-```{r echo=TRUE, wine_quality}
+```{r Echo=False, wine_quality}
 Wine$oquality = as.ordered(Wine$quality)
 ggplot(Wine, aes(x=quality, fill = oquality)) +
   geom_bar(stat="count") +
@@ -106,7 +110,7 @@ With 5 and 6 having a relatively even number of wines and having the majority of
 
 # Univariate Analysis
 
-```{r echo=TRUE}
+```{r Echo=False}
 summary(Wine)
 ```
 
@@ -114,7 +118,7 @@ The features that characterize the red wine are related to acidity (fixed.acidit
 
 Considering what we have inferred in the previous section, we have created a new variable that separates good wines from bad ones. The following histogram shows the count of this variable
 
-```{r echo=TRUE }
+```{r Echo=False }
 Wine$good.wine<-ifelse(Wine$quality>5.5,1,0)
 
 ggplot(Wine,aes(x=good.wine,fill=factor(good.wine)))+geom_bar(stat = "count",position = "dodge")+
@@ -127,7 +131,7 @@ ggplot(Wine,aes(x=good.wine,fill=factor(good.wine)))+geom_bar(stat = "count",pos
 
 # Bivariate Plots Section
 
-```{r echo=TRUE, Bivariate_Plots}
+```{r Echo=False, Bivariate_Plots}
 Wine.orig %>% cor() %>% corrplot.mixed(upper = "ellipse", tl.cex=.8, tl.pos = 'lt', number.cex = .8)
 ```
 
